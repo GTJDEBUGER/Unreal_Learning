@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "GCharacter.generated.h"
 
+class UCameraComponent;
+class USpringArmComponent;
+
 UCLASS()
 class UNREAL_LEARNING_API AGCharacter : public ACharacter
 {
@@ -16,8 +19,16 @@ public:
 	AGCharacter();
 
 protected:
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* SpringArmComp;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	void MoveForward(float Value);
 
 public:	
 	// Called every frame

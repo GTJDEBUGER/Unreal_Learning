@@ -14,6 +14,10 @@ class UNREAL_LEARNING_API AGCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> ProjectileClass;
+
 public:
 	// Sets default values for this character's properties
 	AGCharacter();
@@ -29,6 +33,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void FireballAttack();
 
 public:	
 	// Called every frame

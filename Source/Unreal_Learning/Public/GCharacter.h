@@ -32,9 +32,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//Player move forward (relate to camera)
 	void MoveForward(float Value);
+	//Player move right (relate to camera)
 	void MoveRight(float Value);
+
+	//Generate a fireball from left hand of player
 	void FireballAttack();
+
+	//Rewrite virtual function of jump
+	virtual void Jump() override;
 
 public:	
 	// Called every frame

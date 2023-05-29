@@ -11,6 +11,7 @@ AGCharacter::AGCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>("SpringArmComp"); //Create spring arm component
 	SpringArmComp->bUsePawnControlRotation = true; //Let spring arm can be control by pawn
 	SpringArmComp->SetupAttachment(RootComponent); //Set new spring arm component follow player
@@ -19,6 +20,8 @@ AGCharacter::AGCharacter()
 	CameraComp->SetupAttachment(SpringArmComp); //Set new camera follow player
 
 	GetCharacterMovement()->bOrientRotationToMovement = true; //Make sure player move to current face direction
+	GetCharacterMovement()->JumpZVelocity = 500.0f; //Set initial jump force
+	GetCharacterMovement()->AirControl = 0.15f;//Control x y direction movement when player on the air
 
 	bUseControllerRotationYaw = false; //Cancel player rotate in Yaw
 }
@@ -52,6 +55,11 @@ void AGCharacter::MoveRight(float Value)
 	AddMovementInput(RightVector, Value);
 }
 
+void AGCharacter::Jump()
+{
+	Super::Jump();
+}
+
 void AGCharacter::FireballAttack()
 {
 	FVector LefthandLocation = GetMesh()->GetSocketLocation("middle_01_l");
@@ -80,6 +88,8 @@ void AGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("Jump",IE_Pressed,this ,&AGCharacter::Jump);
 
 	PlayerInputComponent->BindAction("FireballAttack",IE_Pressed,this, &AGCharacter::FireballAttack);
 }

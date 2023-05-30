@@ -2,6 +2,12 @@
 
 
 #include "GRealBox.h"
+#include "Components/StaticMeshComponent.h"
+
+void AGRealBox::Interact_Implementation(APawn* InstigatorPawn)
+{
+	LidMesh->SetRelativeLocation(TargetLocation);
+}
 
 // Sets default values
 AGRealBox::AGRealBox()
@@ -9,11 +15,13 @@ AGRealBox::AGRealBox()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	StaticMeshComp= CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComp");
-	StaticMeshComp->SetCollisionProfileName("RealObject");
-	StaticMeshComp->SetSimulatePhysics(true);
-	RootComponent = StaticMeshComp;
+	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>("BaseMesh");
+	RootComponent = BaseMesh;
 
+	LidMesh = CreateDefaultSubobject<UStaticMeshComponent>("LidMesh");
+	LidMesh->SetupAttachment(BaseMesh);
+
+	TargetLocation = FVector(-140,0,0);
 }
 
 // Called when the game starts or when spawned

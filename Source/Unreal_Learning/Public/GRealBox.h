@@ -4,24 +4,34 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GGamePlayInterface.h"
 #include "GRealBox.generated.h"
 
 class UStaticMeshComponent;
 
 UCLASS()
-class UNREAL_LEARNING_API AGRealBox : public AActor
+class UNREAL_LEARNING_API AGRealBox : public AActor, public IGGamePlayInterface
 {
 	GENERATED_BODY()
+public:
+
+	UPROPERTY(EditAnywhere)
+	FVector TargetLocation;
+
+	void Interact_Implementation(APawn* InstigatorPawn);
 	
 public:	
 	// Sets default values for this actor's properties
 	AGRealBox();
 
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* StaticMeshComp;
-
-
 protected:
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* BaseMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* LidMesh;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

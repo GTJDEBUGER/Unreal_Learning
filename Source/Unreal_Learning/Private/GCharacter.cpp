@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GInteractionComponent.h"
 
 // Sets default values
 AGCharacter::AGCharacter()
@@ -23,6 +24,7 @@ AGCharacter::AGCharacter()
 	GetCharacterMovement()->JumpZVelocity = 500.0f; //Set initial jump force
 	GetCharacterMovement()->AirControl = 0.15f;//Control x y direction movement when player on the air
 
+	InteractionComp = CreateDefaultSubobject<UGInteractionComponent>("InteractionComp"); //Interact component for interact with world object
 	bUseControllerRotationYaw = false; //Cancel player rotate in Yaw
 }
 
@@ -60,6 +62,14 @@ void AGCharacter::Jump()
 	Super::Jump();
 }
 
+void AGCharacter::PrimaryInteract()
+{
+	if (InteractionComp) 
+	{
+		InteractionComp->PrimaryInteract();
+	}
+}
+
 void AGCharacter::FireballAttack()
 {
 	FVector LefthandLocation = GetMesh()->GetSocketLocation("middle_01_l");
@@ -90,6 +100,8 @@ void AGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this ,&AGCharacter::Jump);
+
+	PlayerInputComponent->BindAction("PrimaryInteract",IE_Pressed,this,&AGCharacter::PrimaryInteract);
 
 	PlayerInputComponent->BindAction("FireballAttack",IE_Pressed,this, &AGCharacter::FireballAttack);
 }

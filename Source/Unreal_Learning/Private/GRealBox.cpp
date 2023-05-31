@@ -6,7 +6,7 @@
 
 void AGRealBox::Interact_Implementation(APawn* InstigatorPawn)
 {
-	LidMesh->SetRelativeLocation(TargetLocation);
+	LidMesh->SetWorldLocation(TargetPos);
 }
 
 // Sets default values
@@ -21,7 +21,7 @@ AGRealBox::AGRealBox()
 	LidMesh = CreateDefaultSubobject<UStaticMeshComponent>("LidMesh");
 	LidMesh->SetupAttachment(BaseMesh);
 
-	TargetLocation = FVector(-140,0,0);
+	TargetPos = FVector(-140,0,0);
 }
 
 // Called when the game starts or when spawned

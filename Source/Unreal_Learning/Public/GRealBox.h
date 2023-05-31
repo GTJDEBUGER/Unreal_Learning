@@ -16,7 +16,7 @@ class UNREAL_LEARNING_API AGRealBox : public AActor, public IGGamePlayInterface
 public:
 
 	UPROPERTY(EditAnywhere)
-	FVector TargetLocation;
+	FVector TargetPos;
 
 	void Interact_Implementation(APawn* InstigatorPawn);
 	

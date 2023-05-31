@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GInteractionComponent.h"
 #include "GCharacter.generated.h"
 
 class UCameraComponent;
 class USpringArmComponent;
+class UGInteractionComponent;
 
 UCLASS()
 class UNREAL_LEARNING_API AGCharacter : public ACharacter
@@ -29,6 +31,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
 
+	UPROPERTY(VisibleAnywhere)
+	UGInteractionComponent* InteractionComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -42,6 +47,9 @@ protected:
 
 	//Rewrite virtual function of jump
 	virtual void Jump() override;
+
+	//How player response to interact input
+	void PrimaryInteract();
 
 public:	
 	// Called every frame
